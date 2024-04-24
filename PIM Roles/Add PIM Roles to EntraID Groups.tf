@@ -35,7 +35,7 @@ resource "azuread_directory_role" "pim_roles" {
 
 ### Option 1 -- Eligible Roles
 ## Group members need to use PIM to assign permissions to their identity
-resource "azuread_directory_role_eligibility_schedule_request" "example" {
+resource "azuread_directory_role_eligibility_schedule_request" "eligible_roles" {
   for_each           = azuread_directory_role.pim_roles
   role_definition_id = each.value.template_id
   principal_id       = azuread_group.pim_groups[each.key].object_id
@@ -44,7 +44,7 @@ resource "azuread_directory_role_eligibility_schedule_request" "example" {
 }
 
 ### Option 2 - Prem assignment of role based on group membership
-resource "azuread_directory_role_assignment" "example" {
+resource "azuread_directory_role_assignment" "assigned_roles" {
   for_each            = azuread_directory_role.pim_roles
   role_id             = each.value.object_id
   principal_object_id = azuread_group.pim_groups[each.key].object_id
