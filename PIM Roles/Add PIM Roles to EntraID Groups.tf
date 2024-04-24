@@ -17,7 +17,7 @@ locals {
 ## Create AD Groups which are assignable to a role
 resource "azuread_group" "pim_groups" {
   for_each                = toset(local.azure_roles)
-  display_name            = "Entra - Role - PIM - ${each.key}"
+  display_name            = "PIM Enabled Role - ${each.key}"
   description             = "PIM Role Group for ${each.key}"
   owners                  = [data.azuread_service_principal.github-app.object_id]
   members                 = []
